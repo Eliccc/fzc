@@ -1,0 +1,56 @@
+<meta chartset=utf8>
+<script type="text/javascript" src="CapImageBar.js"></script>
+<link type="text/css" rel="stylesheet" href="CapImageBar.css" />
+
+<div id='capImageBar'>
+</div>
+
+<input type="file" id='selectFile'>
+
+<script>
+	var imgMap = {
+		'imageId0':{
+			url:'image/image1.png',
+			text:'imageId0'
+		},
+		'imageId1':{
+			url:'image/image2.png',
+			text:'imageId1'
+		},
+		'imageId2':{
+			url:'image/image1.png',
+			text:'imageId2'
+		},
+		'imageId3':{
+			url:'image/image2.png',
+			text:'imageId3'
+		},
+		'imageId4':{
+			url:'image/image1.png',
+			text:'imageId4'
+		},
+		'imageId5':{
+			url:'image/image2.png',
+			text:'imageId5'
+		},
+	};
+	var capImageBarConfig = {
+		element: null,
+		imageList : ['imageId0','imageId1','imageId2','imageId3','imageId4','imageId5'],
+		imageMap: imgMap,
+		styleConfig: {
+			width: '100%',
+			height: '250px',
+			uniparted_width: '200px',
+			uniparted_height: '200px',
+		}
+		
+	};
+	var capImageBar = new CapImageBar(capImageBarConfig);
+	capImageBar.init();
+	addEvent("onclcilk") function(name)
+	{
+		var num = conmessagebox.getText();
+		imgMap.setImageUrl(name,"http://..."+name+".gif");
+	}
+</script>
