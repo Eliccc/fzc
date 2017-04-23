@@ -5,6 +5,8 @@ function CapImageBar(imageBarConfig){
 		imageMap:imageBarConfig.imageMap,
 		clickCallback:imageBarConfig.clickCallback,
 		longClickCallback:imageBarConfig.longClickCallback,
+		callback_1:imageBarConfig.callback_1,
+		callback_2:imageBarConfig.callback_2,
 		// 默认配置
 		styleConfig: {
 			width:imageBarConfig.styleConfig.width || '100%',
@@ -147,12 +149,13 @@ CapImageBar.prototype.addLongtap = function(elementId, _this){
 			_this.floaterEnable = true;
 			btn1.onclick = function(){
 				console.log('btn1 '+ elementId)
-				target.childNodes[0].src = "./image/image3.png";
+				_this.capImageBar.callback_1(target);
+				
 			}
 
 			btn2.onclick = function(){
 				console.log('btn2 '+ elementId)
-					target.childNodes[0].src = "./image/image4.png";
+				_this.capImageBar.callback_2(target);
 			}
 
 			_this.rmEnable = false;
