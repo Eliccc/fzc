@@ -34,10 +34,19 @@
 			text:'imageId5'
 		},
 	};
+	var callback1 = function(target){
+		target.childNodes[0].src = "./image/image3.png";
+	}
+	var callback2 = function(target){
+		target.childNodes[0].src = "./image/image4.png";
+	}
+
 	var capImageBarConfig = {
 		element: null,
 		imageList : ['imageId0','imageId1','imageId2','imageId3','imageId4','imageId5'],
 		imageMap: imgMap,
+		callback_1:callback1,
+		callback_2:callback2,
 		styleConfig: {
 			width: '100%',
 			height: '250px',
@@ -48,9 +57,9 @@
 	};
 	var capImageBar = new CapImageBar(capImageBarConfig);
 	capImageBar.init();
-	addEvent("onclcilk") function(name)
-	{
-		var num = conmessagebox.getText();
-		imgMap.setImageUrl(name,"http://..."+name+".gif");
-	}
+//	addEvent("onclcilk") function(name)
+//	{
+//		var num = conmessagebox.getText();
+//		imgMap.setImageUrl(name,"http://..."+name+".gif");
+//	}
 </script>
