@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SKY</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+	<link rel="shortcut icon" href="/resources/imgs/weather.jpg">
+	<link rel="stylesheet" type="text/css" href="/dhtmlx/dhtmlx.css"/>
+	<link rel="stylesheet" type="text/css" href="/dhtmlx/fonts/font_roboto/roboto.css"/>
+	<link rel="stylesheet" type="text/css" href="/js/common_view/lc_dt_view.css"/>
+
+	<script src="/js/common_view/lc_dt_view.js"></script>
+	<script src="/dhtmlx/dhtmlx.js"></script>
+	<script src="/js/util/HttpCall.js"></script>
+	<script src="/js/util/HttpUtil.js"></script>
+	<script src="/js/util/ShareUtil.js"></script>
+	<script src="/js/util/BoxUtil.js"></script>
+	<script src="/js/common_view/ToolBarGrid.js"></script>
+	<script src="/page/header.js"></script>
+</head>
+
+
+<body>
+	<h1>Loading data from JS array</h1>
+	<div id="data_container" style="border:1px solid #c0c0c0; background-color:white;width:596px;height:396px;"></div>
+	<input type='file' class='lc_dtview_imageSelect' id='imageSelect'/>
+</body>
+
+<script>
+	var data_arr = [
+					{ id:"0b","customer_id":"b", "party_type_name":"担保人", "customer_name":"乙", "customer_cert_type":"身份证", "customer_cert_id":"283473648363947349378"},
+					{ id:"0c","customer_id":"c", "party_type_name":"担保人配偶", "customer_name":"丙", "customer_cert_type":"身份证", "customer_cert_id":"283473648363947349378","spouse":"b"},
+					{ id:"0a","customer_id":"a", "party_type_name":"主申请人", "customer_name":"甲","customer_cert_type":"身份证", "customer_cert_id":"283473648363947349378"},
+					{ id:"0d","customer_id":"d", "party_type_name":"担保人", "customer_name":"丁", "customer_cert_type":"身份证", "customer_cert_id":"283473648363947349378"}
+	];
+
+	var default_img="/js/common_view/common/camera.png";
+	var tmp = "<img onmousedown='picMouseDown()' src='"+default_img+"' class='lc_dtview_imgCls' onclick='tempClick(this)'><br>#party_type_name#<br>#customer_name#";
+
+	var myFixDataView = new FixDataView("data_container");
+	myFixDataView.setArray(data_arr);
+	myFixDataView.setFaceTemplate(tmp, xEvent);
+	myFixDataView.setOtherTemplate(tmp);
+	myFixDataView.show();
+</script>
+</html>
