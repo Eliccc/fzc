@@ -1,0 +1,155 @@
+function FixDataView(input_div_id)
+{
+	this.div_id = input_div_id;
+}
+
+FixDataView.prototype.setArray = function(arr)
+{
+	this.data_arr = arr;
+}
+
+FixDataView.prototype.setFaceTemplate = function(tmp)
+{
+	face_body = tmp;
+}
+
+FixDataView.prototype.setOtherTemplate = function(tmp)
+{
+	other_body = tmp;
+}
+
+FixDataView.prototype.show = function()
+{
+	doLcDtViewOnLoad(this.div_id);
+}
+
+var div_id = "data_container";
+var myDataView;
+var default_img="/js/common_view/common/camera.png";
+var timer;
+var face_body;
+var other_body;
+var xEvent = ;
+
+
+var mytmp_header = "<div class='lc_dtview_component'   onmousedown='tempMouseDown(this)' onmouseup='tempMouseUp( this)'>";
+var mytmp_footer = "<div class='lc_dtview_rm' onclick='rmClick(this, )'></div></div>";
+
+function getBody(body,obj)
+{
+	let idx_1 = body.indexOf("#");
+	if (idx_1<0)
+		return body;
+	let idx_2 = body.indexOf("#",idx_1+1);
+
+	let tmp_v_1 = body.substring(0,idx_1);
+	let tmp_v_2 = obj[body.substring(idx_1+1,idx_2)];
+	let tmp_v_3 = body.substring(idx_2+1,body.length);
+	return getBody(tmp_v_1+tmp_v_2+tmp_v_3,obj);
+}
+
+function myTemp(obj)
+{
+	if (obj.side)
+		mybody = getBody(face_body,obj);
+	else
+		mybody = getBody(other_body,obj);
+	return mytmp_header + mybody + mytmp_footer;
+}
+
+function tempClick(_this){
+	//console.log('click');
+	var funcEnable = _this.src.indexOf(default_img) >= 0;
+	if(funcEnable){
+
+		var imageSelect = document.getElementById('imageSelect');
+		imageSelect.click();
+		imageSelect.onchange = function(){
+			//console.log(imageSelect.value)
+			var files = !!imageSelect.files ? imageSelect.files : [];
+			if (!files.length || !window.FileReader) return;
+			if (/^image/.test( files[0].type)){
+				var reader = new FileReader();
+				reader.readAsDataURL(files[0]);
+				reader.onloadend = function(){
+					//console.log(this.result);
+					_this.src = this.result;
+				}
+			}
+		};
+	}else{
+		console.log('照片已经选取！');
+	}
+}
+
+function tempMouseDown(_this){
+	timer = setTimeout(function(){
+		_this.lastChild.style.display = 'block';
+	},1000);
+	window.event.preventDefault();
+	window.event.stopPropagation();
+}
+
+function tempMouseUp(_this){
+	if(timer)
+		clearTimeout(timer);
+	//console.log('tempMouseUp');
+	window.event.preventDefault();
+	window.event.stopPropagation();
+}
+
+function rmClick(_this){
+	//console.log('rmClick');
+	_this.parentNode.childNodes[0].src = default_img;
+	_this.style.display = 'none';
+	window.event.preventDefault();
+	window.event.stopPropagation();
+}
+
+function tempOnLoad(_this){
+	_this.childNodes[2].style.display = 'none';
+}
+
+function picMouseDown(){
+	window.event.preventDefault();
+	window.event.stopPropagation();
+}
+
+function onmouseup(){
+	window.event.preventDefault();
+	window.event.stopPropagation();
+}
+
+function bodyOnMouseDown()
+{
+		var e = e || window.event; 
+		var elem = e.target || e.srcElement;  
+		while (elem) {
+			if(elem.id && elem.id!="" && elem.id== 'imageSelect'){
+				return;
+			}
+			elem = elem.parentNode;  
+		}
+		var rms = document.getElementsByClassName('lc_dtview_rm');
+		for(var i = 0; i < rms.length; i++){
+			rms[i].style.display = 'none';
+		}
+}
+
+function doLcDtViewOnLoad(this_div_id)
+{
+	dhtmlx.MouseEvents = "";
+
+	myDataView = new dhtmlXDataView({
+		container:this_div_id,
+		type:{
+			template:function(obj){
+				return myTemp(obj);
+			},
+		}
+	});
+	myDataView.parse(this.data_arr,"json");
+	
+	document.body.onmousedown = bodyOnMouseDown();
+}
+
